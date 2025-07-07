@@ -1,0 +1,393 @@
+// Main JavaScript file for Haven Woodworks
+console.log("Haven Woodworks JS Loaded");
+
+class Carousel {
+    constructor(containerSelector) {
+        this.container = document.querySelector(containerSelector);
+        if (!this.container) {
+            console.error(`Carousel container ${containerSelector} not found.`);
+            return;
+        }
+
+        this.slides = this.container.querySelectorAll('.carousel-slide');
+        this.prevButton = this.container.querySelector('.carousel-button.prev');
+        this.nextButton = this.container.querySelector('.carousel-button.next');
+        this.dotsContainer = this.container.querySelector('.carousel-dots');
+
+        if (this.slides.length === 0) {
+            console.warn("No slides found in the carousel.");
+            return;
+        }
+
+        this.currentIndex = 0;
+        this.slideInterval = null;
+        this.autoRotateTime = 5000; // 5 seconds
+
+        this.init();
+    }
+
+    init() {
+        this.createDots();
+        this.updateCarousel();
+        this.startAutoRotate();
+
+        this.prevButton.addEventListener('click', () => this.prevSlide());
+        this.nextButton.addEventListener('click', () => this.nextSlide());
+
+        this.dotsContainer.addEventListener('click', (e) => {
+            if (e.target.classList.contains('carousel-dot')) {
+                const dotIndex = parseInt(e.target.dataset.slideTo);
+                this.goToSlide(dotIndex);
+            }
+        });
+
+        this.container.addEventListener('mouseenter', () => this.stopAutoRotate());
+        this.container.addEventListener('mouseleave', () => this.startAutoRotate());
+
+        // Keyboard navigation
+        this.container.setAttribute('tabindex', '0'); // Make container focusable
+        this.container.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                this.prevSlide();
+            } else if (e.key === 'ArrowRight') {
+                this.nextSlide();
+            }
+        });
+    }
+
+    createDots() {
+        this.slides.forEach((_, index) => {
+            const dot = document.createElement('button');
+            dot.classList.add('carousel-dot');
+            dot.setAttribute('aria-label', `Go to slide ${index + 1}`);
+            dot.dataset.slideTo = index;
+            this.dotsContainer.appendChild(dot);
+        });
+    }
+
+    updateCarousel() {
+        this.slides.forEach((slide, index) => {
+            slide.classList.remove('active');
+            if (index === this.currentIndex) {
+                slide.classList.add('active');
+            }
+        });
+
+        const dots = this.dotsContainer.querySelectorAll('.carousel-dot');
+        dots.forEach((dot, index) => {
+            dot.classList.remove('active');
+            if (index === this.currentIndex) {
+                dot.classList.add('active');
+            }
+        });
+    }
+
+    prevSlide() {
+        this.currentIndex = (this.currentIndex - 1 + this.slides.length) % this.slides.length;
+        this.updateCarousel();
+        this.resetAutoRotate();
+    }
+
+    nextSlide() {
+        this.currentIndex = (this.currentIndex + 1) % this.slides.length;
+        this.updateCarousel();
+        this.resetAutoRotate();
+    }
+
+    goToSlide(index) {
+        this.currentIndex = index;
+        this.updateCarousel();
+        this.resetAutoRotate();
+    }
+
+    startAutoRotate() {
+        this.stopAutoRotate(); // Clear existing interval before starting a new one
+        this.slideInterval = setInterval(() => this.nextSlide(), this.autoRotateTime);
+    }
+
+    stopAutoRotate() {
+        clearInterval(this.slideInterval);
+    }
+
+    resetAutoRotate() {
+        this.stopAutoRotate();
+        this.startAutoRotate();
+    }
+}
+
+// Dark Mode Toggle
+function initializeDarkModeToggle() {
+    const toggleButton = document.getElementById('darkModeToggle');
+    const body = document.body;
+    const sunIcon = toggleButton ? toggleButton.querySelector('.icon-sun') : null;
+    const moonIcon = toggleButton ? toggleButton.querySelector('.icon-moon') : null;
+
+    if (!toggleButton || !sunIcon || !moonIcon) {
+        console.warn('Dark mode toggle button or icons not found.');
+        return;
+    }
+
+    // Function to apply theme and update icon
+    const applyTheme = (theme) => {
+        if (theme === 'dark') {
+            body.classList.add('dark-mode');
+            sunIcon.style.display = 'none';
+            moonIcon.style.display = 'block';
+            toggleButton.setAttribute('aria-label', 'Switch to light mode');
+        } else {
+            body.classList.remove('dark-mode');
+            sunIcon.style.display = 'block';
+            moonIcon.style.display = 'none';
+            toggleButton.setAttribute('aria-label', 'Switch to dark mode');
+        }
+    };
+
+    // Check localStorage for saved theme
+    const savedTheme = localStorage.getItem('theme');
+    // Check for system preference if no saved theme
+    const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+
+    if (savedTheme) {
+        applyTheme(savedTheme);
+    } else if (prefersDarkScheme.matches) {
+        applyTheme('dark'); // Default to system preference if dark
+    } else {
+        applyTheme('light'); // Default to light
+    }
+
+    // Event listener for the toggle button
+    toggleButton.addEventListener('click', () => {
+        const currentTheme = body.classList.contains('dark-mode') ? 'dark' : 'light';
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        applyTheme(newTheme);
+        localStorage.setItem('theme', newTheme);
+    });
+
+    // Listen for changes in system preference
+    prefersDarkScheme.addEventListener('change', (e) => {
+        // Only update if no theme is explicitly saved by the user
+        if (!localStorage.getItem('theme')) {
+            applyTheme(e.matches ? 'dark' : 'light');
+        }
+    });
+}
+
+// Scroll-triggered Animations
+function initializeScrollAnimations() {
+    const sectionsToAnimate = document.querySelectorAll('.fade-in-section');
+
+    if (!sectionsToAnimate.length) {
+        console.warn('No sections found for scroll animation.');
+        return;
+    }
+
+    const observerOptions = {
+        root: null, // relative to document viewport
+        rootMargin: '0px',
+        threshold: 0.1 // 10% of item is visible
+    };
+
+    const observerCallback = (entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target); // Stop observing once visible
+            }
+        });
+    };
+
+    const intersectionObserver = new IntersectionObserver(observerCallback, observerOptions);
+
+    sectionsToAnimate.forEach(section => {
+        intersectionObserver.observe(section);
+    });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const heroCarousel = new Carousel('.carousel-container');
+    initializeProductGalleryFilter();
+    initializeContactForm();
+    initializeMobileMenu();
+    initializeDarkModeToggle();
+    initializeScrollAnimations();
+});
+
+// Product Gallery Filtering
+function initializeProductGalleryFilter() {
+    const filterButtonsContainer = document.querySelector('.filter-buttons');
+    const galleryItems = document.querySelectorAll('.product-card');
+
+    if (!filterButtonsContainer || galleryItems.length === 0) {
+        console.warn('Filter buttons container or gallery items not found.');
+        return;
+    }
+
+    filterButtonsContainer.addEventListener('click', (e) => {
+        if (e.target.classList.contains('filter-btn')) {
+            // Remove active class from all buttons
+            filterButtonsContainer.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            // Add active class to the clicked button
+            e.target.classList.add('active');
+
+            const filterValue = e.target.dataset.filter;
+
+            galleryItems.forEach(item => {
+                if (filterValue === 'all' || item.dataset.category === filterValue) {
+                    item.classList.remove('hide');
+                } else {
+                    item.classList.add('hide');
+                }
+            });
+        }
+    });
+}
+
+// Contact Form Handling
+function initializeContactForm() {
+    const form = document.getElementById('contact-form');
+    const formStatus = document.getElementById('form-status');
+
+    if (!form) {
+        console.warn('Contact form not found.');
+        return;
+    }
+
+    form.addEventListener('submit', async function(event) {
+        event.preventDefault();
+
+        if (!validateForm(form)) {
+            formStatus.textContent = 'Please correct the errors above.';
+            formStatus.className = 'form-status error';
+            return;
+        }
+
+        const formData = new FormData(form);
+        formStatus.textContent = 'Sending...';
+        formStatus.className = 'form-status';
+
+        try {
+            const response = await fetch(form.action, {
+                method: form.method,
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                formStatus.textContent = 'Thanks for your message! We will get back to you soon.';
+                formStatus.className = 'form-status success';
+                form.reset();
+                clearErrorMessages(form);
+            } else {
+                response.json().then(data => {
+                    if (Object.hasOwn(data, 'errors')) {
+                        formStatus.textContent = data["errors"].map(error => error["message"]).join(", ");
+                    } else {
+                        formStatus.textContent = 'Oops! There was a problem submitting your form.';
+                    }
+                    formStatus.className = 'form-status error';
+                })
+            }
+        } catch (error) {
+            formStatus.textContent = 'Oops! There was a problem submitting your form. Check your network connection.';
+            formStatus.className = 'form-status error';
+        }
+    });
+
+    // Real-time validation listeners
+    form.querySelectorAll('input[required], textarea[required]').forEach(input => {
+        input.addEventListener('input', () => {
+            validateField(input);
+        });
+        // Also validate on blur for fields that might be skipped
+        input.addEventListener('blur', () => {
+            validateField(input);
+        });
+    });
+}
+
+function validateForm(form) {
+    let isValid = true;
+    clearErrorMessages(form);
+    form.querySelectorAll('input[required], textarea[required]').forEach(input => {
+        if (!validateField(input)) {
+            isValid = false;
+        }
+    });
+    return isValid;
+}
+
+function validateField(field) {
+    const errorMessageElement = field.parentElement.querySelector('.error-message');
+    let message = '';
+    field.removeAttribute('aria-invalid');
+
+    if (field.hasAttribute('required') && !field.value.trim()) {
+        message = `${field.previousElementSibling.textContent} is required.`;
+    } else if (field.type === 'email' && field.value.trim() && !isValidEmail(field.value.trim())) {
+        message = 'Please enter a valid email address.';
+    }
+
+    if (message) {
+        errorMessageElement.textContent = message;
+        field.setAttribute('aria-invalid', 'true');
+        return false;
+    } else {
+        errorMessageElement.textContent = ''; // Clear error message
+        return true;
+    }
+}
+
+function isValidEmail(email) {
+    // Basic email validation regex
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
+
+function clearErrorMessages(form) {
+    form.querySelectorAll('.error-message').forEach(msg => msg.textContent = '');
+    form.querySelectorAll('[aria-invalid]').forEach(input => input.removeAttribute('aria-invalid'));
+}
+
+// Modular functions will be added here as features are implemented.
+
+// Mobile Menu Toggle
+function initializeMobileMenu() {
+    const navToggle = document.querySelector('.nav-toggle');
+    const navList = document.getElementById('navList');
+
+    if (navToggle && navList) {
+        navToggle.addEventListener('click', () => {
+            navList.classList.toggle('active');
+            const isExpanded = navList.classList.contains('active');
+            navToggle.setAttribute('aria-expanded', isExpanded);
+        });
+
+        // Optional: Close menu when a link is clicked (for single-page apps)
+        navList.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (navList.classList.contains('active')) {
+                    navList.classList.remove('active');
+                    navToggle.setAttribute('aria-expanded', 'false');
+                }
+            });
+        });
+
+        // Optional: Close menu if clicking outside of it
+        document.addEventListener('click', (event) => {
+            const isClickInsideNav = navList.contains(event.target);
+            const isClickOnToggle = navToggle.contains(event.target);
+            if (!isClickInsideNav && !isClickOnToggle && navList.classList.contains('active')) {
+                navList.classList.remove('active');
+                navToggle.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+
+    } else {
+        console.warn('Mobile navigation toggle or list not found.');
+    }
+}

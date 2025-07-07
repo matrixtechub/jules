@@ -1,0 +1,823 @@
+/* CSS Variables */
+:root {
+    --primary-color: #8B4513; /* SaddleBrown */
+    --secondary-color: #A0522D; /* Sienna */
+    --accent-color: #D2691E; /* Chocolate */
+    --light-gray: #F5F5F5;
+    --dark-gray: #333333;
+    --font-family: 'Arial', sans-serif;
+    --base-font-size: 16px;
+
+    /* Light Theme (Default) */
+    --background-color: #FFFFFF;
+    --text-color: var(--dark-gray);
+    --header-bg: var(--primary-color);
+    --header-text: var(--light-gray);
+    --card-bg: #fff;
+    --card-border: #ddd;
+    --card-shadow: rgba(0, 0, 0, 0.1);
+    --input-bg: #fff;
+    --input-border: #ccc;
+    --contact-section-bg: var(--light-gray);
+}
+
+/* Dark Theme */
+body.dark-mode {
+    --background-color: #121212; /* Very dark gray, common for dark modes */
+    --text-color: #E0E0E0; /* Light gray for text */
+    --header-bg: #2C1A0B; /* Darker brown for header */
+    --header-text: #D4BF9A; /* Muted gold/beige for header text */
+    --primary-color-dark-theme: #A46A2A; /* Adjust primary for dark if needed, or use existing */
+    --secondary-color-dark-theme: #B87333;
+    --accent-color-dark-theme: #E08D50;
+    --card-bg: #1E1E1E; /* Dark gray for cards */
+    --card-border: #444;
+    --card-shadow: rgba(255, 255, 255, 0.05);
+    --input-bg: #2A2A2A;
+    --input-border: #555;
+    --contact-section-bg: #1A1A1A; /* Slightly lighter than main dark bg */
+    --light-gray: #333333; /* Redefine light gray for dark mode context if used directly */
+    --dark-gray: #CCCCCC;  /* Redefine dark gray for dark mode context */
+}
+
+
+/* Apply theme variables */
+body {
+    font-family: var(--font-family);
+    line-height: 1.6;
+    color: var(--text-color); /* Use theme variable */
+    background-color: var(--background-color); /* Use theme variable */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth theme transition */
+}
+
+.site-header {
+    background-color: var(--header-bg); /* Use theme variable */
+    color: var(--header-text); /* Use theme variable */
+}
+
+.logo {
+    color: var(--header-text); /* Use theme variable */
+}
+
+.nav-list li a {
+    color: var(--header-text); /* Use theme variable */
+}
+body.dark-mode .nav-list li a:hover,
+body.dark-mode .nav-list li a:focus {
+    color: var(--accent-color-dark-theme, var(--accent-color));
+}
+body.dark-mode .nav-list li a:hover::after,
+body.dark-mode .nav-list li a:focus::after {
+    background-color: var(--accent-color-dark-theme, var(--accent-color));
+}
+
+
+.nav-toggle {
+    color: var(--header-text); /* Use theme variable */
+}
+.hamburger, .hamburger::before, .hamburger::after {
+    background-color: var(--header-text); /* Use theme variable */
+}
+
+/* Update other elements to use theme variables */
+.product-gallery h2,
+.contact-section h2 {
+    color: var(--primary-color); /* Or a specific dark mode variable if defined */
+}
+body.dark-mode .product-gallery h2,
+body.dark-mode .contact-section h2 {
+    color: var(--primary-color-dark-theme, var(--primary-color));
+}
+
+
+.filter-btn {
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+}
+body.dark-mode .filter-btn {
+    color: var(--primary-color-dark-theme, var(--primary-color));
+    border-color: var(--primary-color-dark-theme, var(--primary-color));
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+    background-color: var(--primary-color);
+    color: var(--background-color); /* Invert for contrast */
+}
+body.dark-mode .filter-btn:hover,
+body.dark-mode .filter-btn.active {
+    background-color: var(--primary-color-dark-theme, var(--primary-color));
+    color: var(--background-color);
+}
+
+.product-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--card-border);
+    box-shadow: 0 4px 6px var(--card-shadow);
+}
+.product-card:hover {
+     box-shadow: 0 8px 12px var(--card-shadow); /* Slightly more pronounced shadow for dark mode can be an option */
+}
+
+.card-content h3 {
+    color: var(--secondary-color);
+}
+body.dark-mode .card-content h3 {
+    color: var(--secondary-color-dark-theme, var(--secondary-color));
+}
+.card-content p {
+    color: var(--text-color); /* Ensure card text also uses theme variable */
+}
+
+
+.contact-section {
+    background-color: var(--contact-section-bg);
+}
+
+#contact-form {
+    background-color: var(--card-bg); /* Re-use card bg for form bg */
+    box-shadow: 0 4px 10px var(--card-shadow);
+}
+
+.form-group label {
+    color: var(--text-color);
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group textarea {
+    background-color: var(--input-bg);
+    border: 1px solid var(--input-border);
+    color: var(--text-color); /* Ensure input text color changes */
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="email"]:focus,
+.form-group textarea:focus {
+    border-color: var(--primary-color); /* Or specific dark mode focus color */
+    box-shadow: 0 0 0 2px var(--primary-color-dark-theme, rgba(139, 69, 19, 0.2));
+}
+body.dark-mode .form-group input[type="text"]:focus,
+body.dark-mode .form-group input[type="email"]:focus,
+body.dark-mode .form-group textarea:focus {
+    border-color: var(--primary-color-dark-theme, var(--primary-color));
+    box-shadow: 0 0 0 2px var(--accent-color-dark-theme, rgba(210, 105, 30, 0.3));
+}
+
+
+.btn-submit {
+    background-color: var(--accent-color);
+    color: #FFFFFF; /* Keep text white or light for accent button */
+}
+body.dark-mode .btn-submit {
+    background-color: var(--accent-color-dark-theme, var(--accent-color));
+}
+body.dark-mode .btn-submit:hover,
+body.dark-mode .btn-submit:focus {
+     background-color: var(--accent-color); /* Slightly lighter for hover in dark mode */
+}
+
+
+footer {
+    background-color: var(--header-bg); /* Match header background */
+    color: var(--header-text);
+}
+
+/* Dark Mode Toggle Button Styles */
+.header-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem; /* Space between nav and toggle */
+}
+
+.dark-mode-toggle {
+    background: none;
+    border: none;
+    color: var(--header-text); /* Matches other header icons/text */
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dark-mode-toggle:hover,
+.dark-mode-toggle:focus {
+    background-color: rgba(255, 255, 255, 0.1); /* Subtle hover for dark header */
+    outline: none;
+}
+body.dark-mode .dark-mode-toggle:hover,
+body.dark-mode .dark-mode-toggle:focus {
+    background-color: rgba(0, 0, 0, 0.2); /* Subtle hover for light header (when dark mode is active) */
+}
+
+
+.dark-mode-toggle svg {
+    transition: transform 0.3s ease;
+}
+
+/* Scroll-triggered Animations */
+.fade-in-section {
+    opacity: 0;
+    transform: translateY(30px); /* Start slightly lower */
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.fade-in-section.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/* Basic Reset */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: var(--base-font-size);
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-family);
+    line-height: 1.6;
+    color: var(--dark-gray);
+    background-color: #FFFFFF;
+}
+
+/* Header & Navigation */
+.site-header {
+    background-color: var(--primary-color);
+    color: var(--light-gray);
+    padding: 1rem 0;
+    position: sticky; /* Sticky header */
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--light-gray);
+    text-decoration: none;
+}
+
+.logo:hover {
+    text-decoration: none; /* No underline for logo */
+    opacity: 0.9;
+}
+
+.main-nav {
+    position: relative;
+}
+
+.nav-list {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.nav-list li a {
+    color: var(--light-gray);
+    text-decoration: none;
+    font-size: 1.1rem;
+    padding: 0.5rem 0;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.nav-list li a:hover,
+.nav-list li a:focus {
+    color: var(--accent-color); /* Highlight on hover/focus */
+    text-decoration: none;
+}
+
+.nav-list li a::after { /* Underline effect on hover */
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--accent-color);
+    transition: width 0.3s ease;
+}
+
+.nav-list li a:hover::after,
+.nav-list li a:focus::after {
+    width: 100%;
+}
+
+
+/* Mobile Navigation Toggle (Hamburger) */
+.nav-toggle {
+    display: none; /* Hidden by default, shown on mobile */
+    background: none;
+    border: none;
+    color: var(--light-gray);
+    font-size: 1.8rem; /* Size of hamburger icon lines */
+    cursor: pointer;
+    padding: 0.5rem;
+    z-index: 1001; /* Above nav list */
+}
+
+.hamburger {
+    display: block;
+    position: relative;
+    width: 25px;
+    height: 3px;
+    background-color: var(--light-gray);
+    transition: all 0.3s ease-in-out;
+}
+
+.hamburger::before,
+.hamburger::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 25px;
+    height: 3px;
+    background-color: var(--light-gray);
+    transition: all 0.3s ease-in-out;
+}
+
+.hamburger::before {
+    transform: translateY(-8px);
+}
+
+.hamburger::after {
+    transform: translateY(8px);
+}
+
+/* Hamburger animation to X when active */
+.nav-toggle[aria-expanded="true"] .hamburger {
+    background-color: transparent; /* Middle line disappears */
+}
+
+.nav-toggle[aria-expanded="true"] .hamburger::before {
+    transform: translateY(0) rotate(45deg);
+}
+
+.nav-toggle[aria-expanded="true"] .hamburger::after {
+    transform: translateY(0) rotate(-45deg);
+}
+
+
+footer {
+    background-color: var(--primary-color);
+    color: var(--light-gray);
+    padding: 1rem;
+    text-align: center;
+}
+
+main {
+    padding: 1rem;
+}
+
+a {
+    color: var(--accent-color);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Mobile Menu */
+@media (max-width: 768px) {
+    .nav-toggle {
+        display: block; /* Show hamburger */
+    }
+
+    .nav-list {
+        position: absolute;
+        top: 100%; /* Position below header */
+        right: 0;
+        background-color: var(--primary-color);
+        width: 100%;
+        max-width: 300px; /* Or 100vw for full width */
+        flex-direction: column;
+        align-items: center;
+        padding: 1rem 0;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+
+        /* Smooth dropdown animation */
+        transform: translateY(-10px); /* Start slightly above */
+        opacity: 0;
+        visibility: hidden; /* Use visibility for accessibility */
+        transition: transform 0.3s ease-out, opacity 0.3s ease-out, visibility 0s 0.3s;
+        /* Delay visibility transition until opacity is 0 */
+    }
+
+    .nav-list.active {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+        transition: transform 0.3s ease-out, opacity 0.3s ease-out, visibility 0s 0s;
+    }
+
+    .nav-list li {
+        width: 100%;
+        text-align: center;
+    }
+
+    .nav-list li a {
+        display: block;
+        padding: 1rem;
+        width: 100%;
+    }
+
+    .nav-list li a::after { /* No underline effect on mobile links, or adjust as needed */
+        display: none;
+    }
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+ul {
+    list-style: none;
+}
+
+/* Utility Classes (can be expanded later) */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+/* Visually Hidden class for accessibility */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+/* Hero Section & Carousel */
+.hero-section {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.carousel-container {
+    position: relative;
+    width: 100%;
+    max-height: 70vh; /* Adjust as needed */
+    overflow: hidden;
+}
+
+.carousel-slides {
+    position: relative; /* Needed for absolute positioning of slides in fade effect */
+    width: 100%;
+    height: 70vh; /* Should match image height and container max-height */
+}
+
+/* Class to enable fade effect: slides are stacked */
+.carousel-slides.fade-effect .carousel-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    visibility: hidden;
+}
+
+.carousel-slides.fade-effect .carousel-slide.active {
+    opacity: 1;
+    visibility: visible;
+    z-index: 1; /* Ensure active slide is on top */
+}
+
+/* If not using fade (e.g. slide effect), display flex would be used instead of absolute positioning */
+/*
+.carousel-slides.slide-effect {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+.carousel-slides.slide-effect .carousel-slide {
+    min-width: 100%;
+    position: relative;
+}
+*/
+
+.carousel-slide { /* Common styles for all slides, specific effect styles above */
+    width: 100%;
+    height: 100%;
+}
+
+.carousel-slide img {
+    width: 100%;
+    height: 70vh; /* Match max-height of container */
+    object-fit: cover; /* Cover the area without distortion */
+}
+
+.carousel-caption {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.6);
+    color: var(--light-gray);
+    padding: 1rem 2rem;
+    border-radius: 0.5rem;
+    text-align: center;
+    z-index: 2;
+}
+
+.carousel-caption h3 {
+    margin-bottom: 0.5rem;
+    font-size: 1.75rem;
+}
+
+.carousel-caption p {
+    font-size: 1.1rem;
+}
+
+.carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    font-size: 1.5rem;
+    z-index: 10;
+    border-radius: 0.25rem;
+    transition: background-color 0.3s ease;
+}
+
+.carousel-button:hover,
+.carousel-button:focus {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.carousel-button.prev {
+    left: 1rem;
+}
+
+.carousel-button.next {
+    right: 1rem;
+}
+
+.carousel-dots {
+    position: absolute;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 0.5rem;
+    z-index: 10;
+}
+
+.carousel-dot {
+    width: 12px;
+    height: 12px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.carousel-dot.active {
+    background-color: rgba(255, 255, 255, 1);
+}
+
+/* Ensure slides are absolutely positioned for fade effect if not using flexbox translateX */
+/* If using fade effect (opacity), slides need to be stacked */
+.carousel-slides.fade-effect .carousel-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+/* Product Gallery */
+.product-gallery {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    text-align: center;
+}
+
+.product-gallery h2 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: var(--primary-color);
+}
+
+.filter-buttons {
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem; /* Spacing between buttons */
+    flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+}
+
+.filter-btn {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    color: var(--primary-color);
+    background-color: transparent;
+    border: 2px solid var(--primary-color);
+    border-radius: 25px; /* Pill shape */
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.filter-btn:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
+    gap: 1.5rem;
+}
+
+.product-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex; /* Used for filtering: hide/show */
+    flex-direction: column;
+}
+
+.product-card.hide {
+    display: none;
+}
+
+.product-card:hover {
+    transform: translateY(-5px) scale(1.02); /* Zoom and slight lift effect */
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+}
+
+.product-card picture img {
+    width: 100%;
+    height: 250px; /* Fixed height for images */
+    object-fit: cover;
+}
+
+.card-content {
+    padding: 1rem;
+    text-align: left;
+}
+
+.card-content h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--secondary-color);
+}
+
+.card-content p {
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+/* Responsive adjustments for product gallery grid if needed beyond auto-fit */
+/* For example, ensuring 1 column on very small screens if minmax(300px, 1fr) isn't enough */
+@media (max-width: 350px) {
+    .gallery-grid {
+        grid-template-columns: 1fr; /* Strictly 1 column */
+    }
+}
+
+/* Contact Form */
+.contact-section {
+    padding-top: 2rem;
+    padding-bottom: 3rem;
+    background-color: var(--light-gray); /* Light background for contrast */
+}
+
+.contact-section h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+.contact-intro {
+    text-align: center;
+    font-size: 1.1rem;
+    margin-bottom: 2.5rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#contact-form {
+    max-width: 700px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    color: var(--dark-gray);
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-family: var(--font-family);
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="email"]:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(139, 69, 19, 0.2); /* SaddleBrown with alpha */
+}
+
+.form-group textarea {
+    resize: vertical; /* Allow vertical resize, disable horizontal */
+}
+
+.error-message {
+    display: block;
+    color: #D8000C; /* Error red */
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    min-height: 1em; /* Reserve space to prevent layout shifts */
+}
+
+.btn-submit {
+    display: block;
+    width: 100%;
+    padding: 0.85rem 1.5rem;
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-submit:hover,
+.btn-submit:focus {
+    background-color: #b8560f; /* Darker shade of Chocolate */
+}
+
+.form-status {
+    margin-top: 1rem;
+    text-align: center;
+    font-weight: bold;
+}
+
+.form-status.success {
+    color: green;
+}
+
+.form-status.error {
+    color: #D8000C;
+}
