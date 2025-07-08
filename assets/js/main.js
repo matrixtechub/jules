@@ -205,6 +205,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // initializeDarkModeToggle(); // Call removed
     initializeScrollAnimations(); // Assumes .fade-in-section might be on any page
     initializeBackToTopButton(); // Button is on all pages
+
+    // Initialize interactive gallery controls only if the section exists (index.html)
+    if (document.querySelector('.interactive-gallery-section')) {
+        initializeInteractiveGalleryControls();
+        initializeLightbox(); // Lightbox is part of the interactive gallery
+    }
 });
 
 // Product Gallery Filtering
@@ -238,6 +244,134 @@ function initializeProductGalleryFilter() {
         }
     });
 }
+
+// Interactive Gallery Section - Arrow Controls
+function initializeInteractiveGalleryControls() {
+    const gallerySection = document.querySelector('.interactive-gallery-section');
+    if (!gallerySection) {
+        return; // Section not on this page, or only on index.html
+    }
+
+    const scrollContainer = gallerySection.querySelector('.image-scroll-container');
+    const prevButton = gallerySection.querySelector('.gallery-arrow.prev');
+    const nextButton = gallerySection.querySelector('.gallery-arrow.next');
+
+    if (!scrollContainer || !prevButton || !nextButton) {
+        // console.warn('Interactive gallery elements (scroll container or arrows) not found for this instance.');
+        return;
+    }
+
+    const scrollAmount = () => {
+        const firstItem = scrollContainer.querySelector('.gallery-image-item');
+        if (firstItem) {
+            // Scroll by one item width + gap (20px from CSS)
+            return firstItem.offsetWidth + 20;
+        }
+        return 300; // Default scroll amount if item not found (should not happen ideally)
+    };
+
+    prevButton.addEventListener('click', () => {
+        scrollContainer.scrollBy({
+            left: -scrollAmount(),
+            behavior: 'smooth'
+        });
+    });
+
+    nextButton.addEventListener('click', () => {
+        scrollContainer.scrollBy({
+            left: scrollAmount(),
+            behavior: 'smooth'
+        });
+    });
+
+    // Optional: Disable buttons at ends - needs more complex state tracking or scroll event listeners
+    // For now, simple scroll.
+}
+
+// Lightbox Functionality
+function initializeLightbox() {
+    const lightboxOverlay = document.getElementById('lightboxOverlay');
+    const lightboxImage = document.getElementById('lightboxImage');
+    const lightboxCloseButton = lightboxOverlay ? lightboxOverlay.querySelector('.lightbox-close') : null;
+    const lightboxPrevButton = lightboxOverlay ? lightboxOverlay.querySelector('.lightbox-nav.prev') : null;
+    const lightboxNextButton = lightboxOverlay ? lightboxOverlay.querySelector('.lightbox-nav.next') : null;
+
+    const galleryItems = document.querySelectorAll('.interactive-gallery-section .gallery-image-item');
+    let currentImageIndex = 0;
+    const imageSources = [];
+
+    if (!lightboxOverlay || !lightboxImage || !lightboxCloseButton || !lightboxPrevButton || !lightboxNextButton) {
+        // console.warn('Lightbox elements not found. Lightbox functionality will not be available.');
+        // This is fine if the lightbox HTML isn't on every page, but it's intended to be global (on index.html)
+        return;
+    }
+
+    if (galleryItems.length === 0) {
+        // console.warn('No gallery items found for lightbox.');
+        return; // No images to show in lightbox
+    }
+
+    // Populate image sources and attach event listeners to triggers
+    galleryItems.forEach((item, index) => {
+        const imgElement = item.querySelector('img');
+        const triggerButton = item.querySelector('.lightbox-trigger');
+
+        if (imgElement && triggerButton) {
+            imageSources.push(imgElement.src);
+            triggerButton.addEventListener('click', () => {
+                currentImageIndex = index;
+                updateLightboxImage();
+                lightboxOverlay.style.display = 'flex'; // Show overlay
+                setTimeout(() => lightboxOverlay.classList.add('visible'), 10); // Trigger transition
+                document.body.style.overflow = 'hidden'; // Prevent background scroll
+            });
+        }
+    });
+
+    function updateLightboxImage() {
+        if (imageSources.length > 0) {
+            lightboxImage.src = imageSources[currentImageIndex];
+        }
+    }
+
+    function closeLightbox() {
+        lightboxOverlay.classList.remove('visible');
+        // Wait for opacity transition to finish before setting display to none
+        setTimeout(() => {
+            lightboxOverlay.style.display = 'none';
+        }, 300); // Should match CSS transition duration
+        document.body.style.overflow = ''; // Restore background scroll
+    }
+
+    function showPrevImage() {
+        currentImageIndex = (currentImageIndex - 1 + imageSources.length) % imageSources.length;
+        updateLightboxImage();
+    }
+
+    function showNextImage() {
+        currentImageIndex = (currentImageIndex + 1) % imageSources.length;
+        updateLightboxImage();
+    }
+
+    lightboxCloseButton.addEventListener('click', closeLightbox);
+    lightboxPrevButton.addEventListener('click', showPrevImage);
+    lightboxNextButton.addEventListener('click', showNextImage);
+
+    // Close lightbox on Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && lightboxOverlay.classList.contains('visible')) {
+            closeLightbox();
+        }
+    });
+
+    // Close lightbox on overlay click (but not on image click)
+    lightboxOverlay.addEventListener('click', (e) => {
+        if (e.target === lightboxOverlay) { // Only if clicked on the overlay itself
+            closeLightbox();
+        }
+    });
+}
+
 
 // Contact Form Handling
 function initializeContactForm() {

@@ -427,6 +427,230 @@ footer {
     opacity: 0.8;
 }
 
+/* Interactive Gallery Section ("What We Do" - new version) */
+.interactive-gallery-section {
+    padding: 80px 0;
+    background-color: var(--primary-color); /* Navbar color */
+    color: var(--header-text); /* Text color that contrasts with primary-color */
+}
+
+.interactive-gallery-section .sub-title {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--header-text); /* Contrasting color for subtitle on dark bg */
+    opacity: 0.85; /* Slightly subdued */
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+}
+
+.interactive-gallery-section h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-top: 0;
+    margin-bottom: 1.25rem;
+    color: var(--header-text); /* Contrasting color for heading */
+}
+
+.interactive-gallery-section .interactive-gallery-text p:not(.sub-title) {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--header-text);
+    opacity: 0.9;
+    margin-bottom: 1.5rem;
+}
+
+.interactive-gallery-grid {
+    display: flex;
+    align-items: flex-start; /* Align items to the top */
+    gap: 40px; /* Increased gap between text and image gallery */
+}
+
+.interactive-gallery-text {
+    flex-basis: 30%;
+    display: flex;
+    flex-direction: column;
+}
+
+.gallery-controls {
+    margin-top: 1.5rem; /* Space above arrows */
+    margin-bottom: 1.5rem; /* Space below arrows before button */
+    display: flex;
+    gap: 10px;
+}
+
+.gallery-arrow {
+    background-color: rgba(255, 255, 255, 0.2); /* Subtle background */
+    color: var(--header-text);
+    border: 1px solid var(--header-text);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 1rem;
+    display: inline-flex; /* Use flex to center icon */
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.gallery-arrow:hover,
+.gallery-arrow:focus {
+    background-color: var(--accent-color);
+    color: white;
+    border-color: var(--accent-color);
+}
+
+.explore-work-btn {
+    display: inline-block;
+    align-self: flex-start; /* Align button to the left in its container */
+    padding: 12px 24px;
+    background-color: var(--accent-color); /* Use accent color for button */
+    color: white !important;
+    text-decoration: none;
+    border-radius: 9999px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 1rem;
+}
+.explore-work-btn:hover,
+.explore-work-btn:focus {
+    background-color: var(--header-text); /* Contrasting hover, e.g. light color */
+    color: var(--primary-color) !important; /* Text color for that hover */
+    transform: translateY(-2px);
+    text-decoration: none;
+}
+
+
+.interactive-gallery-images {
+    flex-basis: 70%;
+    min-width: 0; /* Important for flex items that scroll */
+}
+
+.image-scroll-container {
+    display: flex;
+    gap: 20px; /* Space between images */
+    overflow-x: auto; /* Horizontal scroll */
+    padding-bottom: 15px; /* Space for scrollbar without overlap */
+    scroll-snap-type: x mandatory; /* Snap scrolling */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+}
+/* Hide scrollbar for a cleaner look, but ensure it's still scrollable */
+.image-scroll-container::-webkit-scrollbar { display: none; } /* Chrome, Safari, Opera */
+.image-scroll-container { -ms-overflow-style: none;  scrollbar-width: none;  } /* IE, Edge, Firefox */
+
+
+.gallery-image-item {
+    flex: 0 0 calc((100% - 20px * 1.5) / 2.5); /* Show 2.5 images, accounting for 1.5 gaps between 2.5 items */
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    scroll-snap-align: center; /* Snap items to center */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.gallery-image-item img {
+    width: 100%;
+    height: 100%; /* Make image fill the item */
+    object-fit: cover; /* Cover the area, might crop */
+    display: block;
+    aspect-ratio: 4 / 5; /* Maintain aspect ratio */
+}
+
+.image-number-overlay {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: bold;
+    padding: 3px 7px;
+    border-radius: 50%;
+    line-height: 1;
+}
+
+.image-title-overlay {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    color: white;
+    font-size: 0.9rem;
+    font-weight: bold;
+    margin: 0;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+}
+
+.lightbox-trigger {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+.lightbox-trigger:hover {
+    background-color: rgba(0,0,0,0.8);
+}
+
+/* Responsive for Interactive Gallery Section */
+@media (max-width: 992px) { /* Adjust breakpoint for tablet if 70/30 is too much */
+    .interactive-gallery-grid {
+        gap: 20px;
+    }
+    .interactive-gallery-text {
+        flex-basis: 35%;
+    }
+    .interactive-gallery-images {
+        flex-basis: 65%;
+    }
+     .gallery-image-item {
+        flex: 0 0 calc((100% - 20px * 1) / 2); /* Show 2 images on tablet */
+    }
+}
+
+
+@media (max-width: 768px) {
+    .interactive-gallery-grid {
+        flex-direction: column;
+        text-align: center;
+    }
+    .interactive-gallery-text {
+        flex-basis: auto; /* Reset basis */
+        width:100%;
+        padding-right: 0;
+        margin-bottom: 2rem;
+        align-items: center; /* Center items like button */
+    }
+    .interactive-gallery-text .sub-title,
+    .interactive-gallery-text h2,
+    .interactive-gallery-text p:not(.sub-title) {
+        text-align: center;
+    }
+    .gallery-controls {
+        justify-content: center; /* Center arrows */
+    }
+    .interactive-gallery-images {
+        flex-basis: auto; /* Reset basis */
+        width: 100%;
+    }
+    .gallery-image-item {
+        flex: 0 0 calc((100% - 20px * 0.5) / 1.5); /* Show 1.5 images on mobile */
+    }
+}
+
+
 /* Logo Bar Section */
 .logo-bar {
     padding: 1.5rem 0; /* Approx 2x navbar height based on navbar padding of 1rem and some text height */
@@ -660,6 +884,96 @@ body.dark-mode .logo-item {
     .what-we-do-image img {
         max-height: 400px; /* Adjust for mobile */
     }
+}
+
+/* Lightbox Styles */
+.lightbox-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85); /* Dark semi-transparent overlay */
+    z-index: 2000; /* High z-index to be on top */
+    display: flex; /* Use flex for centering content */
+    align-items: center;
+    justify-content: center;
+    opacity: 0; /* Hidden by default, transition opacity */
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0s 0.3s ease;
+}
+
+.lightbox-overlay.visible {
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0s;
+}
+
+.lightbox-content {
+    position: relative;
+    max-width: 90vw; /* Max width of content */
+    max-height: 90vh; /* Max height of content */
+    display: flex; /* To help with image centering if needed */
+    align-items: center;
+    justify-content: center;
+}
+
+#lightboxImage {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain; /* Ensure whole image is visible */
+    border-radius: 4px; /* Optional: slight rounding for the image */
+    box-shadow: 0 0 30px rgba(0,0,0,0.5);
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 2.5rem;
+    color: #fff;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
+}
+.lightbox-close:hover {
+    opacity: 1;
+}
+
+.lightbox-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.4);
+    color: #fff;
+    border: none;
+    border-radius: 50%; /* Circular nav buttons */
+    width: 44px;
+    height: 44px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.7;
+    transition: background-color 0.2s ease, opacity 0.2s ease;
+}
+.lightbox-nav:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+    opacity: 1;
+}
+
+.lightbox-nav.prev {
+    left: 20px;
+}
+
+.lightbox-nav.next {
+    right: 20px;
 }
 
 
