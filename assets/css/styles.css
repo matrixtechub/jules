@@ -363,11 +363,11 @@ footer {
 }
 .btn-cta { /* Call to action button for offers */
     display: inline-block;
-    padding: 0.6rem 1.2rem;
+    padding: 0.65rem 1.3rem; /* Adjusted padding */
     background-color: var(--accent-color);
     color: white;
     text-decoration: none;
-    border-radius: 6px; /* Slightly softer radius */
+    border-radius: 9999px; /* Fully rounded */
     font-weight: bold;
     transition: background-color 0.3s ease, transform 0.2s ease;
     text-transform: uppercase;
@@ -597,11 +597,24 @@ body {
 
 .nav-list li a:hover,
 .nav-list li a:focus {
-    color: var(--accent-color); /* Highlight on hover/focus */
+    color: var(--accent-color);
     text-decoration: none;
+    /* Keep ::after underline for hover, or remove if too much */
 }
 
-.nav-list li a::after { /* Underline effect on hover */
+/* Styling for the active navigation link */
+.nav-list li a.active {
+    color: #E2A03F !important; /* Specified active color, important to override base */
+    font-weight: bold; /* Make active link bold */
+    text-decoration: none; /* Ensure no underline */
+}
+
+.nav-list li a.active::after { /* Remove underline effect from active link */
+    display: none;
+}
+
+
+.nav-list li a::after { /* Underline effect for hover on non-active links */
     content: '';
     position: absolute;
     bottom: 0;
@@ -612,16 +625,17 @@ body {
     transition: width 0.3s ease;
 }
 
-.nav-list li a:hover::after,
-.nav-list li a:focus::after {
+.nav-list li a:not(.active):hover::after, /* Apply hover underline only if not active */
+.nav-list li a:not(.active):focus::after {
     width: 100%;
 }
+
 
 .nav-contact-btn {
     background-color: var(--accent-color);
     color: white !important; /* Important to override general nav link color */
-    padding: 0.5rem 1rem !important; /* Ensure padding is applied, important for specificity */
-    border-radius: 6px;
+    padding: 0.65rem 1.3rem !important; /* Adjusted padding for rounded look */
+    border-radius: 9999px; /* Fully rounded */
     font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -854,12 +868,13 @@ ul {
 
 .carousel-caption {
     position: absolute;
-    bottom: 2rem; /* Keep vertical position or adjust as desired */
-    right: 10%; /* Updated: Position 10% from the right edge */
-    left: auto; /* Override previous left positioning */
-    transform: translateX(0); /* Reset translateX if previously used for centering */
-    width: auto; /* Allow width to be determined by content, or set a max-width */
-    max-width: 60%; /* Example: prevent it from becoming too wide */
+    top: 10%;    /* New: Position 10% from the top */
+    right: 5%;   /* New: Position 5% from the right edge */
+    bottom: auto;  /* Override previous bottom positioning */
+    left: auto;    /* Override previous left positioning */
+    transform: none; /* Reset transform, direct positioning now */
+    width: auto;
+    max-width: 40%; /* Adjust max-width as it's now top-right, might need to be narrower */
     background-color: rgba(0, 0, 0, 0.6);
     color: var(--light-gray);
     padding: 1rem 1.5rem; /* Adjusted padding */
@@ -878,8 +893,8 @@ ul {
     margin-top: 1rem; /* Space above the button */
     background-color: var(--accent-color);
     color: white !important;
-    padding: 0.5rem 1rem;
-    border-radius: 6px;
+    padding: 0.65rem 1.3rem; /* Adjusted padding for rounded look */
+    border-radius: 9999px; /* Fully rounded */
     font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -899,12 +914,13 @@ ul {
 /* Responsive adjustments for carousel caption */
 @media (max-width: 768px) {
     .carousel-caption {
-        right: 10%; /* Adjust positioning for smaller screens */
-        left: 10%;
-        max-width: 80%;
+        top: auto; /* Override desktop top positioning */
         bottom: 1.5rem;
+        left: 10%;
+        right: 10%;
+        max-width: 80%; /* Allow it to be wider on tablets */
         padding: 0.75rem 1rem;
-        text-align: center; /* Center text on mobile */
+        text-align: center;
     }
     .carousel-caption h3 {
         font-size: 1.5rem;
@@ -916,10 +932,11 @@ ul {
 
 @media (max-width: 480px) {
     .carousel-caption {
-        right: 5%;
-        left: 5%;
-        max-width: 90%;
+        top: auto; /* Override desktop top positioning */
         bottom: 1rem;
+        left: 5%;
+        right: 5%;
+        max-width: 90%;
         padding: 0.5rem;
     }
     .carousel-caption h3 {
@@ -995,8 +1012,8 @@ ul {
 .carousel-dot {
     width: 8px;
     height: 8px;
-    background-color: transparent;
-    border: 1px solid #D9D9D9; /* Inactive: 1px border, neutral color */
+    background-color: #F0F0F0; /* Inactive: Solid light gray fill */
+    border: none; /* No border for inactive */
     border-radius: 50%;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -1008,7 +1025,7 @@ ul {
     width: 10px;
     height: 10px;
     background-color: #E2A03F; /* Active: filled with specified accent color */
-    border-color: #E2A03F; /* Border matches fill for active */
+    border: none; /* Ensure no border for active either, if fill is enough */
 }
 
 /* Ensure slides are absolutely positioned for fade effect if not using flexbox translateX */
@@ -1042,11 +1059,11 @@ ul {
     font-size: 0.95rem; /* Slightly smaller for a cleaner look */
     color: var(--primary-color);
     background-color: transparent;
-    border: 1px solid var(--primary-color); /* Thinner border */
-    border-radius: 6px; /* Softer radius than pill */
+    border: 1px solid var(--primary-color);
+    border-radius: 9999px; /* Fully rounded */
     cursor: pointer;
     transition: all 0.3s ease;
-    font-weight: normal; /* Less bold */
+    font-weight: normal;
     letter-spacing: 0.03em;
 }
 body.dark-mode .filter-btn {
@@ -1210,7 +1227,7 @@ body.dark-mode .filter-btn.active {
     background-color: var(--accent-color);
     color: white;
     border: none;
-    border-radius: 6px; /* Slightly softer radius */
+    border-radius: 9999px; /* Fully rounded */
     font-size: 1.1rem;
     font-weight: bold;
     cursor: pointer;
