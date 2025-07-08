@@ -855,7 +855,7 @@ ul {
 .carousel-caption {
     position: absolute;
     bottom: 2rem; /* Keep vertical position or adjust as desired */
-    right: 30%; /* Updated: Position 30% from the right edge */
+    right: 10%; /* Updated: Position 10% from the right edge */
     left: auto; /* Override previous left positioning */
     transform: translateX(0); /* Reset translateX if previously used for centering */
     width: auto; /* Allow width to be determined by content, or set a max-width */
