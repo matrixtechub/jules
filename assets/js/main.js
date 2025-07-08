@@ -211,6 +211,11 @@ document.addEventListener('DOMContentLoaded', () => {
         initializeInteractiveGalleryControls();
         initializeLightbox(); // Lightbox is part of the interactive gallery
     }
+
+    // Initialize service showcase if the section exists (index.html)
+    if (document.querySelector('.service-showcase')) {
+        initializeServiceShowcase();
+    }
 });
 
 // Product Gallery Filtering
@@ -287,6 +292,146 @@ function initializeInteractiveGalleryControls() {
     // Optional: Disable buttons at ends - needs more complex state tracking or scroll event listeners
     // For now, simple scroll.
 }
+
+// --- Interactive Service Showcase ---
+const serviceShowcaseData = {
+    "custom-furniture": {
+        imageSrc: "https://via.placeholder.com/600x750/EEEEEE/CCCCCC?Text=Handcrafted+Dining+Table",
+        altText: "Handcrafted dining table",
+        htmlContent: `
+            <h3>Bespoke furniture tailored to your space</h3>
+            <p>Our artisans create heirloom-quality pieces using sustainably sourced hardwoods.</p>
+            <ul>
+                <li>100+ wood species available</li>
+                <li>3D design previews</li>
+                <li>10-year structural warranty</li>
+                <li>Eco-friendly finishes</li>
+            </ul>
+        `
+    },
+    "bespoke-cabinetry": {
+        imageSrc: "https://via.placeholder.com/600x750/EEEEEE/DDDDDD?Text=Kitchen+Cabinet+Close-up",
+        altText: "Kitchen cabinet close-up",
+        htmlContent: `
+            <h3>Precision-built storage solutions</h3>
+            <p>From walk-in closets to kitchen pantries, we maximize functionality without compromising aesthetics.</p>
+            <ul>
+                <li>Soft-close hardware standard</li>
+                <li>Custom organizational inserts</li>
+                <li>6-week average turnaround</li>
+                <li>Dust-proof joinery</li>
+            </ul>
+        `
+    },
+    "residential-woodwork": {
+        imageSrc: "https://via.placeholder.com/600x750/EEEEEE/CCCCCC?Text=Staircase+Wainscoting",
+        altText: "Staircase and wainscoting example",
+        htmlContent: `
+            <h3>Elevating homes through wood</h3>
+            <p>Architectural millwork that transforms ordinary rooms into warm, inviting spaces.</p>
+            <ul>
+                <li>Historic restoration specialists</li>
+                <li>CAD-assisted pattern matching</li>
+                <li>On-site finishing available</li>
+                <li>Fire-retardant options</li>
+            </ul>
+        `
+    },
+    "commercial-installations": {
+        imageSrc: "https://via.placeholder.com/600x750/EEEEEE/DDDDDD?Text=Office+Reception+Desk",
+        altText: "Office reception desk",
+        htmlContent: `
+            <h3>Durable craftsmanship for businesses</h3>
+            <p>High-traffic commercial spaces demand our industrial-grade wood solutions.</p>
+            <ul>
+                <li>ADA-compliant designs</li>
+                <li>Antimicrobial coatings</li>
+                <li>24/7 emergency repairs</li>
+                <li>Bulk order discounts</li>
+            </ul>
+        `
+    },
+    "restoration-services": {
+        imageSrc: "https://via.placeholder.com/600x750/EEEEEE/CCCCCC?Text=Antique+Furniture+Restoration",
+        altText: "Antique furniture being restored",
+        htmlContent: `
+            <h3>Breathing new life into old wood</h3>
+            <p>We preserve the past while making pieces functional for modern use.</p>
+            <ul>
+                <li>19th-century technique specialists</li>
+                <li>Veneer repair masters</li>
+                <li>Patina-matching services</li>
+                <li>Museum conservation standards</li>
+            </ul>
+        `
+    }
+};
+
+function initializeServiceShowcase() {
+    const showcaseSection = document.querySelector('.service-showcase');
+    if (!showcaseSection) {
+        return; // Section not on this page
+    }
+
+    const buttons = showcaseSection.querySelectorAll('.service-btn');
+    const showcaseImage = document.getElementById('serviceShowcaseImage');
+    const showcaseTextContainer = document.getElementById('serviceShowcaseText');
+
+    if (!buttons.length || !showcaseImage || !showcaseTextContainer) {
+        console.warn('Service showcase elements not found.');
+        return;
+    }
+
+    function updateShowcaseContent(serviceKey) {
+        const serviceData = serviceShowcaseData[serviceKey];
+        if (!serviceData) {
+            console.error(`No data found for service key: ${serviceKey}`);
+            return;
+        }
+
+        // Start fade out
+        showcaseImage.classList.add('content-fading');
+        showcaseTextContainer.classList.add('content-fading');
+
+        setTimeout(() => {
+            showcaseImage.src = serviceData.imageSrc;
+            showcaseImage.alt = serviceData.altText;
+            showcaseTextContainer.innerHTML = serviceData.htmlContent;
+
+            // Start fade in
+            showcaseImage.classList.remove('content-fading');
+            showcaseTextContainer.classList.remove('content-fading');
+        }, 300); // Match this delay to CSS transition out duration
+    }
+
+    buttons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Remove active class from all buttons
+            buttons.forEach(btn => btn.classList.remove('active'));
+            // Add active class to clicked button
+            button.classList.add('active');
+
+            const serviceKey = button.dataset.service;
+            updateShowcaseContent(serviceKey);
+        });
+    });
+
+    // Initialize with the first service active (if an active button is pre-set in HTML)
+    const activeButton = showcaseSection.querySelector('.service-btn.active');
+    if (activeButton) {
+        // Content is already pre-loaded via HTML for the active button,
+        // but ensure image alt is set correctly if not in HTML initially.
+        const initialServiceKey = activeButton.dataset.service;
+        if (serviceShowcaseData[initialServiceKey]) {
+            showcaseImage.alt = serviceShowcaseData[initialServiceKey].altText;
+        }
+    } else if (buttons.length > 0) {
+        // Fallback: if no button is active in HTML, activate the first one and load its content
+        buttons[0].classList.add('active');
+        updateShowcaseContent(buttons[0].dataset.service);
+    }
+}
+
 
 // Lightbox Functionality
 function initializeLightbox() {

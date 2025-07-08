@@ -659,11 +659,7 @@ footer {
     border-top: 1px solid var(--input-border);
     border-bottom: 1px solid var(--input-border);
 }
-body.dark-mode .logo-bar {
-    background-color: var(--card-bg); /* Use card bg for dark mode consistency */
-    border-top-color: var(--card-border);
-    border-bottom-color: var(--card-border);
-}
+/* Dark mode .logo-bar styles removed */
 
 .logo-bar-container {
     display: flex;
@@ -677,9 +673,7 @@ body.dark-mode .logo-bar {
     color: var(--secondary-color); /* Color for the icons */
     padding: 0.5rem; /* Some spacing around items */
 }
-body.dark-mode .logo-item {
-    color: var(--secondary-color-dark-theme, var(--secondary-color));
-}
+/* Dark mode .logo-item styles removed */
 
 .logo-item i {
     font-size: 2.5rem; /* fa-3x is approx 3em, this gives more control */
@@ -1530,10 +1524,7 @@ ul {
     font-weight: normal;
     letter-spacing: 0.03em;
 }
-body.dark-mode .filter-btn {
-    color: var(--primary-color-dark-theme, var(--primary-color));
-    border-color: var(--primary-color-dark-theme, var(--primary-color));
-}
+/* Dark mode filter-btn color styles removed */
 
 .filter-btn:hover,
 .filter-btn.active {
@@ -1541,12 +1532,7 @@ body.dark-mode .filter-btn {
     color: var(--header-text); /* Ensure contrast, usually white/light */
     border-color: var(--primary-color); /* Ensure border matches on hover/active */
 }
-body.dark-mode .filter-btn:hover,
-body.dark-mode .filter-btn.active {
-    background-color: var(--primary-color-dark-theme, var(--primary-color));
-    color: var(--text-color); /* Ensure contrast for dark mode */
-    border-color: var(--primary-color-dark-theme, var(--primary-color));
-}
+/* Dark mode filter-btn hover/active styles removed */
 
 
 .filter-btn:focus {
@@ -1706,11 +1692,8 @@ body.dark-mode .filter-btn.active {
     color: var(--header-text); /* Text color that contrasts with primary */
     transform: translateY(-2px); /* Subtle lift */
 }
-body.dark-mode .btn-submit:hover,
-body.dark-mode .btn-submit:focus {
-    background-color: var(--primary-color-dark-theme);
-    color: var(--text-color);
-}
+/* Dark mode .btn-submit styles removed */
+/* Dark mode .btn-submit:hover, .btn-submit:focus styles removed */
 
 
 .form-status {
@@ -1726,3 +1709,5 @@ body.dark-mode .btn-submit:focus {
 .form-status.error {
     color: #D8000C;
 }
+
+[end of assets/css/styles.css]
