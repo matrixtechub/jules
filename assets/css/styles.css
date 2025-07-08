@@ -427,6 +427,67 @@ footer {
     opacity: 0.8;
 }
 
+/* Logo Bar Section */
+.logo-bar {
+    padding: 1.5rem 0; /* Approx 2x navbar height based on navbar padding of 1rem and some text height */
+    /* min-height: 120px; /* Alternative way to set height */
+    background-color: var(--light-gray); /* Or transparent, or a subtle color */
+    border-top: 1px solid var(--input-border);
+    border-bottom: 1px solid var(--input-border);
+}
+body.dark-mode .logo-bar {
+    background-color: var(--card-bg); /* Use card bg for dark mode consistency */
+    border-top-color: var(--card-border);
+    border-bottom-color: var(--card-border);
+}
+
+.logo-bar-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: nowrap; /* Default to no wrap for desktop */
+}
+
+.logo-item {
+    text-align: center;
+    color: var(--secondary-color); /* Color for the icons */
+    padding: 0.5rem; /* Some spacing around items */
+}
+body.dark-mode .logo-item {
+    color: var(--secondary-color-dark-theme, var(--secondary-color));
+}
+
+.logo-item i {
+    font-size: 2.5rem; /* fa-3x is approx 3em, this gives more control */
+    opacity: 0.7;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.logo-item:hover i {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+/* Responsive stacking for logo bar */
+@media (max-width: 768px) {
+    .logo-bar-container {
+        flex-wrap: wrap; /* Allow wrapping */
+        gap: 1rem; /* Add gap for wrapped items */
+    }
+    .logo-item {
+        flex-basis: calc(33.333% - 1rem); /* 3 items per row, accounting for gap */
+        /* For 2 items per row, use calc(50% - 0.5rem) if gap is 1rem */
+    }
+}
+
+@media (max-width: 480px) {
+    .logo-item {
+        flex-basis: calc(50% - 0.5rem); /* 2 items per row on very small screens */
+    }
+    .logo-item i {
+        font-size: 2rem; /* Slightly smaller icons on mobile */
+    }
+}
+
 
 /* Back to Top Button Styles */
 .back-to-top-btn {
@@ -554,6 +615,28 @@ body {
 .nav-list li a:hover::after,
 .nav-list li a:focus::after {
     width: 100%;
+}
+
+.nav-contact-btn {
+    background-color: var(--accent-color);
+    color: white !important; /* Important to override general nav link color */
+    padding: 0.5rem 1rem !important; /* Ensure padding is applied, important for specificity */
+    border-radius: 6px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.nav-contact-btn:hover,
+.nav-contact-btn:focus {
+    background-color: var(--primary-color); /* Match other button hover */
+    color: var(--header-text) !important;
+    text-decoration: none !important; /* Remove underline if any */
+    transform: translateY(-2px);
+}
+.nav-contact-btn::after { /* Remove underline effect from general nav links */
+    display: none !important;
 }
 
 
@@ -772,7 +855,7 @@ ul {
 .carousel-caption {
     position: absolute;
     bottom: 2rem; /* Keep vertical position or adjust as desired */
-    right: 20%; /* Position 20% from the right edge */
+    right: 30%; /* Updated: Position 30% from the right edge */
     left: auto; /* Override previous left positioning */
     transform: translateX(0); /* Reset translateX if previously used for centering */
     width: auto; /* Allow width to be determined by content, or set a max-width */
@@ -787,6 +870,44 @@ ul {
 }
 
 /* Dark mode .carousel-caption style removed */
+
+/* Animation for carousel caption */
+@keyframes captionFadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.carousel-caption.caption-animate-in {
+    animation: captionFadeInUp 0.7s 0.3s ease-out forwards; /* 0.3s delay after slide fades in */
+}
+
+.hero-quote-btn {
+    display: inline-block; /* Or block if it should take full width of caption */
+    margin-top: 1rem; /* Space above the button */
+    background-color: var(--accent-color);
+    color: white !important;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.hero-quote-btn:hover,
+.hero-quote-btn:focus {
+    background-color: var(--primary-color);
+    color: var(--header-text) !important;
+    text-decoration: none !important;
+    transform: translateY(-2px);
+}
 
 
 /* Responsive adjustments for carousel caption */
@@ -886,22 +1007,22 @@ ul {
 }
 
 .carousel-dot {
-    width: 8px; /* Inactive dot size */
-    height: 8px; /* Inactive dot size */
-    background-color: transparent; /* Hollow for inactive */
-    border: 2px solid rgba(255, 255, 255, 0.7); /* Border for inactive */
+    width: 8px;
+    height: 8px;
+    background-color: transparent;
+    border: 1px solid #D9D9D9; /* Inactive: 1px border, neutral color */
     border-radius: 50%;
     cursor: pointer;
-    transition: all 0.3s ease; /* Transition all properties */
-    padding: 0; /* Ensure border is part of the size correctly */
-    box-sizing: border-box; /* Ensure padding/border are included in width/height */
+    transition: all 0.3s ease;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 .carousel-dot.active {
-    width: 10px; /* Active dot size */
-    height: 10px; /* Active dot size */
-    background-color: #E2A03F; /* Active dot fill color */
-    border-color: #E2A03F; /* Active dot border color (can be same as fill) */
+    width: 10px;
+    height: 10px;
+    background-color: #E2A03F; /* Active: filled with specified accent color */
+    border-color: #E2A03F; /* Border matches fill for active */
 }
 
 /* Ensure slides are absolutely positioned for fade effect if not using flexbox translateX */
