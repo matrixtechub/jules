@@ -1,11 +1,13 @@
 /* CSS Variables */
 :root {
-    --primary-color: #8B4513; /* SaddleBrown */
-    --secondary-color: #A0522D; /* Sienna */
-    --accent-color: #D2691E; /* Chocolate */
+    /* Updated, less intense brown palette */
+    --primary-color: #A07A5F;   /* Was #8B4513 SaddleBrown */
+    --secondary-color: #B88A6B; /* Was #A0522D Sienna */
+    --accent-color: #D4A276;    /* Was #D2691E Chocolate */
+
     --light-gray: #F5F5F5;
     --dark-gray: #333333;
-    --font-family: 'Arial', sans-serif;
+    --font-family: 'Varela Round', 'Helvetica Neue', Arial, sans-serif;
     --base-font-size: 16px;
 
     /* Light Theme (Default) */
@@ -25,11 +27,17 @@
 body.dark-mode {
     --background-color: #121212; /* Very dark gray, common for dark modes */
     --text-color: #E0E0E0; /* Light gray for text */
-    --header-bg: #2C1A0B; /* Darker brown for header */
-    --header-text: #D4BF9A; /* Muted gold/beige for header text */
-    --primary-color-dark-theme: #A46A2A; /* Adjust primary for dark if needed, or use existing */
-    --secondary-color-dark-theme: #B87333;
-    --accent-color-dark-theme: #E08D50;
+    --header-bg: #2C1A0B; /* Darker brown for header - this might need adjustment based on new primary */
+    /* Let's make header-bg a darker shade of the new primary for consistency */
+    /* Original primary was #8B4513, new is #A07A5F. A darker shade could be around #4A3B31 */
+    --header-bg: #4A3B31; /* Darker, desaturated version of new primary */
+    --header-text: #D4BF9A; /* Muted gold/beige - this should still work */
+
+    /* Updated dark theme colors based on new palette */
+    --primary-color-dark-theme: #B08A6F;   /* Lighter than new light-mode primary */
+    --secondary-color-dark-theme: #C89A7B; /* Lighter than new light-mode secondary */
+    --accent-color-dark-theme: #E0B286;    /* Lighter than new light-mode accent */
+
     --card-bg: #1E1E1E; /* Dark gray for cards */
     --card-border: #444;
     --card-shadow: rgba(255, 255, 255, 0.05);
@@ -44,11 +52,22 @@ body.dark-mode {
 /* Apply theme variables */
 body {
     font-family: var(--font-family);
-    line-height: 1.6;
+    line-height: 1.65; /* Slightly increased for Varela Round's characteristics */
     color: var(--text-color); /* Use theme variable */
     background-color: var(--background-color); /* Use theme variable */
     transition: background-color 0.3s ease, color 0.3s ease; /* Smooth theme transition */
+    -webkit-font-smoothing: antialiased; /* Better font rendering for some displays */
+    -moz-osx-font-smoothing: grayscale; /* Better font rendering for some displays */
 }
+
+h1, h2, h3, h4, h5, h6 {
+    letter-spacing: -0.01em; /* Slightly tighter spacing for Varela Round headings */
+    margin-top: 1em; /* Ensure some space above headings */
+}
+h1 { margin-bottom: 1rem; } /* More space after H1 */
+h2 { margin-bottom: 0.85rem; }
+h3 { margin-bottom: 0.75rem; }
+
 
 .site-header {
     background-color: var(--header-bg); /* Use theme variable */
@@ -113,20 +132,40 @@ body.dark-mode .filter-btn.active {
 .product-card {
     background-color: var(--card-bg);
     border: 1px solid var(--card-border);
-    box-shadow: 0 4px 6px var(--card-shadow);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px var(--card-shadow); /* Softer shadow */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
 }
 .product-card:hover {
-     box-shadow: 0 8px 12px var(--card-shadow); /* Slightly more pronounced shadow for dark mode can be an option */
+     box-shadow: 0 5px 10px var(--card-shadow); /* Slightly more defined hover shadow */
+     transform: translateY(-5px) scale(1.02);
 }
 
-.card-content h3 {
+/* Styles specifically for .card-content within .product-card */
+.product-card .card-content {
+    padding: 1.25rem; /* Increased padding */
+    text-align: left;
+    flex-grow: 1;
+    display: flex; /* Already on product-card, but explicit here for clarity if needed */
+    flex-direction: column; /* Already on product-card */
+}
+
+.product-card .card-content h3 {
+    font-size: 1.4rem; /* Slightly adjusted for new font */
+    /* margin-bottom is handled by general h3 styling */
     color: var(--secondary-color);
 }
-body.dark-mode .card-content h3 {
+body.dark-mode .product-card .card-content h3 { /* Specificity for dark mode */
     color: var(--secondary-color-dark-theme, var(--secondary-color));
 }
-.card-content p {
-    color: var(--text-color); /* Ensure card text also uses theme variable */
+.product-card .card-content p {
+    font-size: 0.95rem; /* Slightly adjusted for new font */
+    line-height: 1.6;
+    margin-bottom: auto; /* Pushes h3 to top if p is shorter */
+    color: var(--text-color);
 }
 
 
@@ -154,14 +193,15 @@ body.dark-mode .card-content h3 {
 .form-group input[type="text"]:focus,
 .form-group input[type="email"]:focus,
 .form-group textarea:focus {
-    border-color: var(--primary-color); /* Or specific dark mode focus color */
-    box-shadow: 0 0 0 2px var(--primary-color-dark-theme, rgba(139, 69, 19, 0.2));
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px rgba(212, 162, 118, 0.25); /* Alpha version of new --accent-color #D4A276, slightly less spread */
 }
 body.dark-mode .form-group input[type="text"]:focus,
 body.dark-mode .form-group input[type="email"]:focus,
 body.dark-mode .form-group textarea:focus {
-    border-color: var(--primary-color-dark-theme, var(--primary-color));
-    box-shadow: 0 0 0 2px var(--accent-color-dark-theme, rgba(210, 105, 30, 0.3));
+    border-color: var(--accent-color-dark-theme);
+    box-shadow: 0 0 0 2px rgba(224, 178, 134, 0.25); /* Alpha version of new --accent-color-dark-theme #E0B286 */
 }
 
 
@@ -361,16 +401,20 @@ body.dark-mode .about-subsection em {
 
 /* Services Page Items */
 .service-item {
-    margin-bottom: 2rem;
-    padding: 1.5rem;
+    margin-bottom: 2.5rem; /* Increased margin */
+    padding: 2rem; /* Increased padding */
     background-color: var(--card-bg);
     border: 1px solid var(--card-border);
     border-radius: 8px;
-    box-shadow: 0 2px 4px var(--card-shadow);
+    box-shadow: 0 2px 4px var(--card-shadow); /* Consistent softer shadow */
+    transition: box-shadow 0.3s ease; /* Add transition for hover */
+}
+.service-item:hover {
+    box-shadow: 0 5px 10px var(--card-shadow); /* Consistent hover shadow */
 }
 .service-item h2 {
     color: var(--secondary-color);
-    margin-bottom: 0.75rem;
+    /* margin-bottom is handled by general h2 styling */
 }
 body.dark-mode .service-item h2 {
     color: var(--secondary-color-dark-theme, var(--secondary-color));
@@ -388,8 +432,8 @@ body.dark-mode .service-item h2 i {
 
 /* Offers Page Items */
 .offer-item {
-    margin-bottom: 2rem;
-    padding: 1.5rem;
+    margin-bottom: 2.5rem; /* Increased margin */
+    padding: 2rem; /* Increased padding */
     background-color: var(--card-bg);
     border: 1px solid var(--card-border);
     border-left: 5px solid var(--accent-color);
@@ -400,7 +444,7 @@ body.dark-mode .offer-item {
 }
 .offer-item h2 {
     color: var(--secondary-color);
-    margin-bottom: 0.5rem;
+    /* margin-bottom is handled by general h2 styling */
 }
 body.dark-mode .offer-item h2 {
     color: var(--secondary-color-dark-theme, var(--secondary-color));
@@ -418,20 +462,26 @@ body.dark-mode .offer-item h2 {
     background-color: var(--accent-color);
     color: white;
     text-decoration: none;
-    border-radius: 4px;
+    border-radius: 6px; /* Slightly softer radius */
     font-weight: bold;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
-.btn-cta:hover {
-    background-color: #b8560f; /* Darker accent */
-    color: white;
+.btn-cta:hover,
+.btn-cta:focus {
+    background-color: var(--primary-color); /* Use primary color for hover */
+    color: var(--header-text); /* Text color that contrasts with primary */
     text-decoration: none;
+    transform: translateY(-2px); /* Subtle lift */
 }
 body.dark-mode .btn-cta {
     background-color: var(--accent-color-dark-theme, var(--accent-color));
 }
-body.dark-mode .btn-cta:hover {
-    background-color: var(--accent-color); /* Lighter accent for dark mode hover */
+body.dark-mode .btn-cta:hover,
+body.dark-mode .btn-cta:focus {
+    background-color: var(--primary-color-dark-theme); /* Lighter accent for dark mode hover */
+    color: var(--text-color);
 }
 
 
@@ -439,17 +489,21 @@ body.dark-mode .btn-cta:hover {
 .testimonials-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem;
-    margin-top: 2rem;
+    gap: 2rem; /* Increased gap */
+    margin-top: 2.5rem; /* Increased top margin */
 }
 .testimonial-card {
     background-color: var(--card-bg);
     border: 1px solid var(--card-border);
-    padding: 1.5rem;
+    padding: 2rem;
     border-radius: 8px;
-    box-shadow: 0 4px 8px var(--card-shadow);
+    box-shadow: 0 2px 4px var(--card-shadow); /* Consistent softer shadow */
     display: flex;
     flex-direction: column;
+    transition: box-shadow 0.3s ease; /* Add transition for hover */
+}
+.testimonial-card:hover {
+    box-shadow: 0 5px 10px var(--card-shadow); /* Consistent hover shadow */
 }
 .testimonial-rating {
     margin-bottom: 0.75rem;
@@ -571,7 +625,7 @@ body {
 
 .nav-list {
     display: flex;
-    gap: 1.5rem;
+    gap: 1.75rem; /* Increased gap slightly */
 }
 
 .nav-list li a {
@@ -972,37 +1026,46 @@ body.dark-mode .carousel-caption {
     text-align: center;
 }
 
-.product-gallery h2 {
-    font-size: 2.5rem;
-    margin-bottom: 2rem;
-    color: var(--primary-color);
-}
+/* .product-gallery h2 is covered by general h2 styling and .page-content h1/h2 */
 
 .filter-buttons {
-    margin-bottom: 2rem;
+    margin-bottom: 2.5rem; /* Increased margin */
     display: flex;
     justify-content: center;
-    gap: 0.5rem; /* Spacing between buttons */
+    gap: 0.75rem; /* Increased spacing between buttons */
     flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
 }
 
 .filter-btn {
     padding: 0.75rem 1.5rem;
-    font-size: 1rem;
+    font-size: 0.95rem; /* Slightly smaller for a cleaner look */
     color: var(--primary-color);
     background-color: transparent;
-    border: 2px solid var(--primary-color);
-    border-radius: 25px; /* Pill shape */
+    border: 1px solid var(--primary-color); /* Thinner border */
+    border-radius: 6px; /* Softer radius than pill */
     cursor: pointer;
     transition: all 0.3s ease;
-    font-weight: bold;
+    font-weight: normal; /* Less bold */
+    letter-spacing: 0.03em;
+}
+body.dark-mode .filter-btn {
+    color: var(--primary-color-dark-theme, var(--primary-color));
+    border-color: var(--primary-color-dark-theme, var(--primary-color));
 }
 
 .filter-btn:hover,
 .filter-btn.active {
     background-color: var(--primary-color);
-    color: white;
+    color: var(--header-text); /* Ensure contrast, usually white/light */
+    border-color: var(--primary-color); /* Ensure border matches on hover/active */
 }
+body.dark-mode .filter-btn:hover,
+body.dark-mode .filter-btn.active {
+    background-color: var(--primary-color-dark-theme, var(--primary-color));
+    color: var(--text-color); /* Ensure contrast for dark mode */
+    border-color: var(--primary-color-dark-theme, var(--primary-color));
+}
+
 
 .filter-btn:focus {
     outline: 2px solid var(--accent-color);
@@ -1012,7 +1075,7 @@ body.dark-mode .carousel-caption {
 .gallery-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
-    gap: 1.5rem;
+    gap: 2rem; /* Increased gap */
 }
 
 .product-card {
@@ -1142,21 +1205,31 @@ body.dark-mode .carousel-caption {
 .btn-submit {
     display: block;
     width: 100%;
-    padding: 0.85rem 1.5rem;
+    padding: 0.85rem 1.75rem; /* Slightly more horizontal padding */
     background-color: var(--accent-color);
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 6px; /* Slightly softer radius */
     font-size: 1.1rem;
     font-weight: bold;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    text-transform: uppercase; /* Common modern touch for buttons */
+    letter-spacing: 0.05em; /* Slight letter spacing */
 }
 
 .btn-submit:hover,
 .btn-submit:focus {
-    background-color: #b8560f; /* Darker shade of Chocolate */
+    background-color: var(--primary-color); /* Use primary color for hover */
+    color: var(--header-text); /* Text color that contrasts with primary */
+    transform: translateY(-2px); /* Subtle lift */
 }
+body.dark-mode .btn-submit:hover,
+body.dark-mode .btn-submit:focus {
+    background-color: var(--primary-color-dark-theme);
+    color: var(--text-color);
+}
+
 
 .form-status {
     margin-top: 1rem;
