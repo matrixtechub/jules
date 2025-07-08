@@ -537,9 +537,7 @@ footer {
     scroll-snap-type: x mandatory; /* Snap scrolling */
     -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
 }
-/* Hide scrollbar for a cleaner look, but ensure it's still scrollable */
-.image-scroll-container::-webkit-scrollbar { display: none; } /* Chrome, Safari, Opera */
-.image-scroll-container { -ms-overflow-style: none;  scrollbar-width: none;  } /* IE, Edge, Firefox */
+/* Scrollbar hiding rules removed to allow default browser scrollbar */
 
 
 .gallery-image-item {
@@ -1057,22 +1055,12 @@ body {
     display: none;
 }
 
-
-.nav-list li a::after { /* Underline effect for hover on non-active links */
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background-color: var(--accent-color);
-    transition: width 0.3s ease;
+/* Underline effect on hover removed for all nav links */
+.nav-list li a::after {
+    display: none; /* Remove ::after underline from all states */
 }
 
-.nav-list li a:not(.active):hover::after, /* Apply hover underline only if not active */
-.nav-list li a:not(.active):focus::after {
-    width: 100%;
-}
+/* Hover/focus color change remains, active state styling remains */
 
 
 .nav-contact-btn {
