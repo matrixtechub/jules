@@ -68,8 +68,18 @@ class Carousel {
     updateCarousel() {
         this.slides.forEach((slide, index) => {
             slide.classList.remove('active');
+            const caption = slide.querySelector('.carousel-caption');
+            if (caption) {
+                caption.classList.remove('caption-animate-in');
+            }
+
             if (index === this.currentIndex) {
                 slide.classList.add('active');
+                // Re-trigger animation for the new active slide's caption
+                if (caption) {
+                    // Timeout to allow class removal to register before re-adding
+                    setTimeout(() => caption.classList.add('caption-animate-in'), 50);
+                }
             }
         });
 
