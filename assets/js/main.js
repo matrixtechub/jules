@@ -115,62 +115,7 @@ class Carousel {
     }
 }
 
-// Dark Mode Toggle
-function initializeDarkModeToggle() {
-    const toggleButton = document.getElementById('darkModeToggle');
-    const body = document.body;
-    const sunIcon = toggleButton ? toggleButton.querySelector('.icon-sun') : null;
-    const moonIcon = toggleButton ? toggleButton.querySelector('.icon-moon') : null;
-
-    if (!toggleButton || !sunIcon || !moonIcon) {
-        console.warn('Dark mode toggle button or icons not found.');
-        return;
-    }
-
-    // Function to apply theme and update icon
-    const applyTheme = (theme) => {
-        if (theme === 'dark') {
-            body.classList.add('dark-mode');
-            sunIcon.style.display = 'none';
-            moonIcon.style.display = 'block';
-            toggleButton.setAttribute('aria-label', 'Switch to light mode');
-        } else {
-            body.classList.remove('dark-mode');
-            sunIcon.style.display = 'block';
-            moonIcon.style.display = 'none';
-            toggleButton.setAttribute('aria-label', 'Switch to dark mode');
-        }
-    };
-
-    // Check localStorage for saved theme
-    const savedTheme = localStorage.getItem('theme');
-    // Check for system preference if no saved theme
-    const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
-
-    if (savedTheme) {
-        applyTheme(savedTheme);
-    } else if (prefersDarkScheme.matches) {
-        applyTheme('dark'); // Default to system preference if dark
-    } else {
-        applyTheme('light'); // Default to light
-    }
-
-    // Event listener for the toggle button
-    toggleButton.addEventListener('click', () => {
-        const currentTheme = body.classList.contains('dark-mode') ? 'dark' : 'light';
-        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        applyTheme(newTheme);
-        localStorage.setItem('theme', newTheme);
-    });
-
-    // Listen for changes in system preference
-    prefersDarkScheme.addEventListener('change', (e) => {
-        // Only update if no theme is explicitly saved by the user
-        if (!localStorage.getItem('theme')) {
-            applyTheme(e.matches ? 'dark' : 'light');
-        }
-    });
-}
+// Dark Mode Toggle function removed.
 
 // Scroll-triggered Animations
 function initializeScrollAnimations() {
@@ -248,7 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // These are common to all pages
     initializeMobileMenu();
-    initializeDarkModeToggle();
+    // initializeDarkModeToggle(); // Call removed
     initializeScrollAnimations(); // Assumes .fade-in-section might be on any page
     initializeBackToTopButton(); // Button is on all pages
 });
