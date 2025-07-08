@@ -526,6 +526,142 @@ body.dark-mode .logo-item {
     outline: none;
 }
 
+/* What We Do Section */
+.what-we-do {
+    padding: 80px 0;
+    /* background-color: var(--background-color); /* Default body background */
+}
+
+.what-we-do-grid {
+    display: flex;
+    align-items: center;
+    gap: 30px; /* This will be the space between text and image */
+}
+
+.what-we-do-text {
+    flex: 1; /* Takes up available space */
+    /* padding-right: 30px; /* Spacing from image, handled by gap on parent now */
+}
+
+.what-we-do-text .sub-title {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em; /* Increased subtle letter-spacing */
+    color: #333;
+    margin-bottom: 0.75rem; /* More space after sub-title */
+    font-weight: 600; /* Slightly bolder if Varela Round is too light */
+}
+/* No dark mode specific for sub-title, assuming #333 is readable enough or use var(--text-color) if not */
+
+.what-we-do-text h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-top: 0;
+    margin-bottom: 1.25rem; /* More space after heading */
+    color: var(--primary-color);
+}
+
+.what-we-do-text p:not(.sub-title) {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #666;
+    margin-bottom: 1.5rem;
+}
+
+.stats {
+    margin-top: 2.5rem; /* More space before stats */
+    margin-bottom: 2.5rem; /* More space after stats */
+}
+
+.stat-item p {
+    font-weight: bold;
+    font-size: 1.05rem; /* Slightly adjusted */
+    margin-bottom: 0.5rem !important;
+    color: var(--text-color);
+}
+.stat-item p strong {
+    color: var(--primary-color);
+    margin-right: 0.25em;
+}
+
+.stat-divider {
+    border: 0;
+    height: 1px;
+    background-color: #E2A03F;
+    margin: 0.75rem 0; /* Adjusted margin for divider */
+    max-width: 200px;
+}
+
+.learn-more-btn {
+    display: inline-block;
+    padding: 12px 24px; /* Specified padding */
+    background-color: var(--accent-color);
+    color: white !important;
+    text-decoration: none;
+    border-radius: 9999px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 1rem; /* Space above button */
+}
+.learn-more-btn:hover,
+.learn-more-btn:focus {
+    background-color: var(--primary-color);
+    color: var(--header-text) !important;
+    transform: translateY(-2px);
+    text-decoration: none;
+}
+
+.what-we-do-image {
+    flex-basis: 40%; /* Example: image takes 40% of width */
+    /* margin-left: 30px; /* Replaced by gap on parent */
+}
+
+.what-we-do-image img {
+    width: 100%;
+    height: auto;
+    max-height: 450px; /* Max height for placeholder, adjust as needed */
+    object-fit: contain; /* Use contain to ensure entire image is visible, or cover if cropping is ok */
+    border-radius: 8px;
+}
+
+/* Responsive for What We Do Section */
+@media (max-width: 768px) {
+    .what-we-do-grid {
+        flex-direction: column;
+        text-align: center;
+        gap: 2rem; /* Adjust gap for stacked layout */
+    }
+    .what-we-do-text {
+        padding-right: 0;
+        margin-bottom: 2rem;
+    }
+    .what-we-do-text .sub-title,
+    .what-we-do-text h2,
+    .what-we-do-text p:not(.sub-title) {
+        text-align: center;
+    }
+    .stats {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .stat-divider {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .what-we-do-image {
+        margin-left: 0;
+        width: 100%;
+        max-width: 400px;
+        margin-top: 1rem;
+    }
+    .what-we-do-image img {
+        max-height: 400px; /* Adjust for mobile */
+    }
+}
+
 
 /* Basic Reset */
 *,
@@ -886,7 +1022,21 @@ ul {
 
 /* Dark mode .carousel-caption style removed */
 
-/* Animation for carousel caption - REMOVED */
+/* Animation for carousel caption (re-added and adjusted) */
+@keyframes captionFadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.carousel-caption.caption-animate-in {
+    animation: captionFadeInUp 0.5s 0.1s ease-out forwards; /* Quicker: 0.5s duration, 0.1s delay */
+}
 
 .hero-quote-btn {
     display: inline-block; /* Or block if it should take full width of caption */
