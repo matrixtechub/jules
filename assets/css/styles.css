@@ -23,31 +23,7 @@
     --contact-section-bg: var(--light-gray);
 }
 
-/* Dark Theme */
-body.dark-mode {
-    --background-color: #121212; /* Very dark gray, common for dark modes */
-    --text-color: #E0E0E0; /* Light gray for text */
-    --header-bg: #2C1A0B; /* Darker brown for header - this might need adjustment based on new primary */
-    /* Let's make header-bg a darker shade of the new primary for consistency */
-    /* Original primary was #8B4513, new is #A07A5F. A darker shade could be around #4A3B31 */
-    --header-bg: #4A3B31; /* Darker, desaturated version of new primary */
-    --header-text: #D4BF9A; /* Muted gold/beige - this should still work */
-
-    /* Updated dark theme colors based on new palette */
-    --primary-color-dark-theme: #B08A6F;   /* Lighter than new light-mode primary */
-    --secondary-color-dark-theme: #C89A7B; /* Lighter than new light-mode secondary */
-    --accent-color-dark-theme: #E0B286;    /* Lighter than new light-mode accent */
-
-    --card-bg: #1E1E1E; /* Dark gray for cards */
-    --card-border: #444;
-    --card-shadow: rgba(255, 255, 255, 0.05);
-    --input-bg: #2A2A2A;
-    --input-border: #555;
-    --contact-section-bg: #1A1A1A; /* Slightly lighter than main dark bg */
-    --light-gray: #333333; /* Redefine light gray for dark mode context if used directly */
-    --dark-gray: #CCCCCC;  /* Redefine dark gray for dark mode context */
-}
-
+/* Dark Theme styles removed */
 
 /* Apply theme variables */
 body {
@@ -81,14 +57,7 @@ h3 { margin-bottom: 0.75rem; }
 .nav-list li a {
     color: var(--header-text); /* Use theme variable */
 }
-body.dark-mode .nav-list li a:hover,
-body.dark-mode .nav-list li a:focus {
-    color: var(--accent-color-dark-theme, var(--accent-color));
-}
-body.dark-mode .nav-list li a:hover::after,
-body.dark-mode .nav-list li a:focus::after {
-    background-color: var(--accent-color-dark-theme, var(--accent-color));
-}
+/* Dark mode nav link hover styles removed */
 
 
 .nav-toggle {
@@ -101,33 +70,24 @@ body.dark-mode .nav-list li a:focus::after {
 /* Update other elements to use theme variables */
 .product-gallery h2,
 .contact-section h2 {
-    color: var(--primary-color); /* Or a specific dark mode variable if defined */
+    color: var(--primary-color);
 }
-body.dark-mode .product-gallery h2,
-body.dark-mode .contact-section h2 {
-    color: var(--primary-color-dark-theme, var(--primary-color));
-}
+/* Dark mode product gallery/contact h2 styles removed */
 
 
 .filter-btn {
     color: var(--primary-color);
-    border: 2px solid var(--primary-color);
+    border: 1px solid var(--primary-color); /* Thinner border */
 }
-body.dark-mode .filter-btn {
-    color: var(--primary-color-dark-theme, var(--primary-color));
-    border-color: var(--primary-color-dark-theme, var(--primary-color));
-}
+/* Dark mode filter-btn color styles removed */
 
 .filter-btn:hover,
 .filter-btn.active {
     background-color: var(--primary-color);
-    color: var(--background-color); /* Invert for contrast */
+    color: var(--header-text); /* Ensure contrast, usually white/light */
+    border-color: var(--primary-color); /* Ensure border matches on hover/active */
 }
-body.dark-mode .filter-btn:hover,
-body.dark-mode .filter-btn.active {
-    background-color: var(--primary-color-dark-theme, var(--primary-color));
-    color: var(--background-color);
-}
+/* Dark mode filter-btn hover/active styles removed */
 
 .product-card {
     background-color: var(--card-bg);
@@ -158,9 +118,7 @@ body.dark-mode .filter-btn.active {
     /* margin-bottom is handled by general h3 styling */
     color: var(--secondary-color);
 }
-body.dark-mode .product-card .card-content h3 { /* Specificity for dark mode */
-    color: var(--secondary-color-dark-theme, var(--secondary-color));
-}
+/* Dark mode .product-card .card-content h3 style removed */
 .product-card .card-content p {
     font-size: 0.95rem; /* Slightly adjusted for new font */
     line-height: 1.6;
@@ -197,25 +155,15 @@ body.dark-mode .product-card .card-content h3 { /* Specificity for dark mode */
     border-color: var(--accent-color);
     box-shadow: 0 0 0 2px rgba(212, 162, 118, 0.25); /* Alpha version of new --accent-color #D4A276, slightly less spread */
 }
-body.dark-mode .form-group input[type="text"]:focus,
-body.dark-mode .form-group input[type="email"]:focus,
-body.dark-mode .form-group textarea:focus {
-    border-color: var(--accent-color-dark-theme);
-    box-shadow: 0 0 0 2px rgba(224, 178, 134, 0.25); /* Alpha version of new --accent-color-dark-theme #E0B286 */
-}
+/* Dark mode form input focus styles removed */
 
 
 .btn-submit {
     background-color: var(--accent-color);
     color: #FFFFFF; /* Keep text white or light for accent button */
 }
-body.dark-mode .btn-submit {
-    background-color: var(--accent-color-dark-theme, var(--accent-color));
-}
-body.dark-mode .btn-submit:hover,
-body.dark-mode .btn-submit:focus {
-     background-color: var(--accent-color); /* Slightly lighter for hover in dark mode */
-}
+/* Dark mode .btn-submit styles removed */
+/* Dark mode .btn-submit:hover, .btn-submit:focus styles removed */
 
 
 footer {
@@ -230,32 +178,10 @@ footer {
     gap: 1rem; /* Space between nav and toggle */
 }
 
-.dark-mode-toggle {
-    background: none;
-    border: none;
-    color: var(--header-text); /* Matches other header icons/text */
-    cursor: pointer;
-    padding: 0.5rem;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.dark-mode-toggle:hover,
-.dark-mode-toggle:focus {
-    background-color: rgba(255, 255, 255, 0.1); /* Subtle hover for dark header */
-    outline: none;
-}
-body.dark-mode .dark-mode-toggle:hover,
-body.dark-mode .dark-mode-toggle:focus {
-    background-color: rgba(0, 0, 0, 0.2); /* Subtle hover for light header (when dark mode is active) */
-}
-
-
-.dark-mode-toggle svg {
-    transition: transform 0.3s ease;
-}
+/* .dark-mode-toggle styles removed */
+/* .dark-mode-toggle:hover, .dark-mode-toggle:focus styles removed */
+/* body.dark-mode .dark-mode-toggle:hover, body.dark-mode .dark-mode-toggle:focus styles removed */
+/* .dark-mode-toggle svg styles removed */
 
 /* Top Bar Styles */
 .top-bar {
@@ -281,21 +207,14 @@ body.dark-mode .dark-mode-toggle:focus {
     margin-right: 15px; /* Spacing for items */
     transition: color 0.3s ease;
 }
-body.dark-mode .top-bar-social a,
-body.dark-mode .top-bar-contact a,
-body.dark-mode .top-bar-contact span {
-    color: var(--header-text); /* Lighter text for dark mode */
-}
+/* Dark mode .top-bar-social a, .top-bar-contact a, .top-bar-contact span styles removed */
 
 
 .top-bar-social a:hover,
 .top-bar-contact a:hover {
     color: var(--accent-color);
 }
-body.dark-mode .top-bar-social a:hover,
-body.dark-mode .top-bar-contact a:hover {
-    color: var(--accent-color-dark-theme, var(--accent-color));
-}
+/* Dark mode .top-bar-social a:hover, .top-bar-contact a:hover styles removed */
 
 .top-bar-social i,
 .top-bar-contact i {
@@ -355,9 +274,7 @@ body.dark-mode .top-bar-contact a:hover {
     color: var(--primary-color);
     text-align: center;
 }
-body.dark-mode .page-content h1 {
-    color: var(--primary-color-dark-theme, var(--primary-color));
-}
+/* Dark mode .page-content h1 style removed */
 
 .page-intro {
     font-size: 1.15rem;
@@ -383,9 +300,7 @@ body.dark-mode .page-content h1 {
     color: var(--secondary-color);
     margin-bottom: 0.75rem;
 }
-body.dark-mode .about-subsection h2 {
-    color: var(--secondary-color-dark-theme, var(--secondary-color));
-}
+/* Dark mode .about-subsection h2 style removed */
 .about-subsection p {
     margin-bottom: 0.5rem;
     line-height: 1.7;
@@ -394,9 +309,7 @@ body.dark-mode .about-subsection h2 {
     font-style: italic;
     color: var(--accent-color);
 }
-body.dark-mode .about-subsection em {
-    color: var(--accent-color-dark-theme, var(--accent-color));
-}
+/* Dark mode .about-subsection em style removed */
 
 
 /* Services Page Items */
@@ -416,16 +329,12 @@ body.dark-mode .about-subsection em {
     color: var(--secondary-color);
     /* margin-bottom is handled by general h2 styling */
 }
-body.dark-mode .service-item h2 {
-    color: var(--secondary-color-dark-theme, var(--secondary-color));
-}
+/* Dark mode .service-item h2 style removed */
 .service-item h2 i {
     margin-right: 0.5rem;
     color: var(--accent-color);
 }
-body.dark-mode .service-item h2 i {
-     color: var(--accent-color-dark-theme, var(--accent-color));
-}
+/* Dark mode .service-item h2 i style removed */
 .service-item p {
     line-height: 1.7;
 }
@@ -439,16 +348,12 @@ body.dark-mode .service-item h2 i {
     border-left: 5px solid var(--accent-color);
     border-radius: 0 8px 8px 0;
 }
-body.dark-mode .offer-item {
-    border-left-color: var(--accent-color-dark-theme, var(--accent-color));
-}
+/* Dark mode .offer-item style removed */
 .offer-item h2 {
     color: var(--secondary-color);
     /* margin-bottom is handled by general h2 styling */
 }
-body.dark-mode .offer-item h2 {
-    color: var(--secondary-color-dark-theme, var(--secondary-color));
-}
+/* Dark mode .offer-item h2 style removed */
 .offer-item h2 i {
     margin-right: 0.5rem;
 }
@@ -475,14 +380,8 @@ body.dark-mode .offer-item h2 {
     text-decoration: none;
     transform: translateY(-2px); /* Subtle lift */
 }
-body.dark-mode .btn-cta {
-    background-color: var(--accent-color-dark-theme, var(--accent-color));
-}
-body.dark-mode .btn-cta:hover,
-body.dark-mode .btn-cta:focus {
-    background-color: var(--primary-color-dark-theme); /* Lighter accent for dark mode hover */
-    color: var(--text-color);
-}
+/* Dark mode .btn-cta styles removed */
+/* Dark mode .btn-cta:hover, .btn-cta:focus styles removed */
 
 
 /* Testimonials Page */
@@ -521,9 +420,7 @@ body.dark-mode .btn-cta:focus {
     margin-bottom: 0.25rem;
     color: var(--secondary-color);
 }
-body.dark-mode .testimonial-card cite {
-     color: var(--secondary-color-dark-theme, var(--secondary-color));
-}
+/* Dark mode .testimonial-card cite style removed */
 .testimonial-project {
     font-size: 0.9rem;
     color: var(--text-color);
@@ -889,10 +786,7 @@ ul {
     transition: right 0.5s ease-in-out, opacity 0.5s ease-in-out; /* Smooth transition for position */
 }
 
-body.dark-mode .carousel-caption {
-    color: var(--header-text); /* Ensure text color contrasts in dark mode */
-    background-color: rgba(255, 255, 255, 0.1); /* Lighter background for dark mode caption */
-}
+/* Dark mode .carousel-caption style removed */
 
 
 /* Responsive adjustments for carousel caption */
