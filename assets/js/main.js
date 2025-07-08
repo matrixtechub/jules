@@ -203,13 +203,54 @@ function initializeScrollAnimations() {
     });
 }
 
+// Back to Top Button
+function initializeBackToTopButton() {
+    const backToTopButton = document.getElementById('backToTopBtn');
+
+    if (!backToTopButton) {
+        // This button is on all pages, so it should ideally be found.
+        // console.warn('Back to Top button not found on this page.'); // Less critical if not found on some pages
+        return;
+    }
+
+    window.addEventListener('scroll', () => {
+        if (window.pageYOffset > 300) { // Show after 300px of scroll
+            backToTopButton.classList.add('visible');
+        } else {
+            backToTopButton.classList.remove('visible');
+        }
+    });
+
+    backToTopButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
-    const heroCarousel = new Carousel('.carousel-container');
-    initializeProductGalleryFilter();
-    initializeContactForm();
+    // Initialize hero carousel only if the hero section exists on the page
+    if (document.getElementById('hero')) {
+        const heroCarousel = new Carousel('.carousel-container');
+    }
+
+    // Initialize gallery filter only if gallery exists
+    if (document.getElementById('gallery')) {
+        initializeProductGalleryFilter();
+    }
+
+    // Initialize contact form only if it exists
+    if (document.getElementById('contact-form')) {
+        initializeContactForm();
+    }
+
+    // These are common to all pages
     initializeMobileMenu();
     initializeDarkModeToggle();
-    initializeScrollAnimations();
+    initializeScrollAnimations(); // Assumes .fade-in-section might be on any page
+    initializeBackToTopButton(); // Button is on all pages
 });
 
 // Product Gallery Filtering
